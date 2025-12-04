@@ -18,3 +18,13 @@ pub fn get_input_path() -> std::path::PathBuf {
     let exe_dir = exe.parent().unwrap();
     return exe_dir.parent().unwrap().parent().unwrap().join("inputs").join(exe_name);
 }
+
+pub fn cartestian_product<I, J>(iter1: I, iter2: J) -> impl Iterator<Item=(I::Item, J::Item)>
+where
+    I: Iterator,
+    J: Iterator + Clone,
+    I::Item: Copy,
+    J::Item: Copy,
+{
+    iter1.flat_map(move |i| iter2.clone().map(move |j| (i, j)))
+}
